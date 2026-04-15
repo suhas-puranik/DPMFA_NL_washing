@@ -1,6 +1,7 @@
 # Script to make RData file for calculated mass flows
 # Authors: Joris Quik and Anne Hids
-
+getwd()
+setwd( "C:/Users/spurani/OneDrive - UvA/Documents/My docs/DPMFA_NL_EU-main/DPMFA_NL_EU-main/output/PET")
 # Load packages 
 library(tidyverse)
 library(readr)
@@ -13,7 +14,7 @@ env = "win"
 # when working from DWO, we can use:
 data_folder <- csv_path
 
-setwd(data_folder)
+#setwd(data_folder)
 
 # Get csv file paths
 file_paths <- list.files(path=data_folder, pattern = "\\.csv$", recursive=TRUE)
@@ -21,7 +22,7 @@ file_paths <- file_paths[str_detect(file_paths, "calculatedMassFlows")]
 file_pathsdf <- as.data.frame(file_paths)
 
 ########################### Get configurations #################################
-filename <- paste0(data_folder, "/metadata.txt")
+filename <- paste0("C:/Users/spurani/OneDrive - UvA/Documents/My docs/DPMFA_NL_EU-main/DPMFA_NL_EU-main/output/metadata.txt")
 f <- readLines(filename, n=13)
 
 ModelRunDate <- grep("Start date and time:",f, value=TRUE)
@@ -120,7 +121,7 @@ if (modeltype == "dpmfa"){
 
 ########################## save data only for years of interest #######################
 
-yoi <- c(2022, 2030, 2050)
+yoi <- c(2010)
 
 DPMFA_years_of_interest <- DPMFA_calculatedMassFlow %>%
   mutate(Mass_Polymer_kt = map(Mass_Polymer_kt, ~ .x[, as.character(yoi), drop = FALSE]))
